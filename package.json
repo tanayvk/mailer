@@ -1,17 +1,13 @@
 {
-	"name": "@adonisjs/mail",
-	"description": "Mail provider for adonis framework and has support for all common mailing services to send emails",
+	"name": "@tanayvk/mailer",
+	"description": "@adonisjs/mail without @adonisjs/core dependency.",
 	"version": "9.2.2",
 	"engines": {
 		"node": ">=18.16.0"
 	},
 	"main": "build/index.js",
 	"type": "module",
-	"files": [
-		"build",
-		"!build/bin",
-		"!build/tests"
-	],
+	"files": ["build", "!build/bin", "!build/tests"],
 	"exports": {
 		".": "./build/index.js",
 		"./types": "./build/src/types.js",
@@ -116,19 +112,13 @@
 	"bugs": {
 		"url": "https://github.com/adonisjs/mail/issues"
 	},
-	"keywords": [
-		"adonis",
-		"mailer",
-		"node-mailer"
-	],
+	"keywords": ["adonis", "mailer", "node-mailer"],
 	"eslintConfig": {
 		"extends": "@adonisjs/eslint-config/package"
 	},
 	"prettier": "@adonisjs/prettier-config",
 	"commitlint": {
-		"extends": [
-			"@commitlint/config-conventional"
-		]
+		"extends": ["@commitlint/config-conventional"]
 	},
 	"publishConfig": {
 		"access": "public",
@@ -147,14 +137,8 @@
 		}
 	},
 	"c8": {
-		"reporter": [
-			"text",
-			"html"
-		],
-		"exclude": [
-			"tests/**",
-			"bin/**"
-		]
+		"reporter": ["text", "html"],
+		"exclude": ["tests/**", "bin/**"]
 	},
 	"tsup": {
 		"entry": [
