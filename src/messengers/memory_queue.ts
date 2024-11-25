@@ -8,7 +8,7 @@
  */
 
 import fastq, { type done } from 'fastq'
-import type { EmitterLike } from '@adonisjs/core/types/events'
+import type { EmitterLike } from '../emitter_type.ts'
 
 import debug from '../debug.js'
 import type { MailResponse } from '../mail_response.js'

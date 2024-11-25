@@ -9,7 +9,7 @@
 
 import string from '@poppinss/utils/string'
 import { AssertionError } from 'node:assert'
-import type { EmitterLike } from '@adonisjs/core/types/events'
+import type { EmitterLike } from './emitter_type.ts'
 import type { SentMessageInfo } from 'nodemailer/lib/json-transport/index.js'
 
 import { Mailer } from './mailer.js'

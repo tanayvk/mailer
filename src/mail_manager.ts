@@ -8,7 +8,7 @@
  */
 
 import { RuntimeException } from '@poppinss/utils'
-import type { EmitterLike } from '@adonisjs/core/types/events'
+import type { EmitterLike } from './emitter_type.ts'
 
 import debug from './debug.js'
 import { Mailer } from './mailer.js'

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import type { EmitterLike } from '@adonisjs/core/types/events'
+import type { EmitterLike } from './emitter_type.ts'
 
 import debug from './debug.js'
 import { Message } from './message.js'
@@ -117,7 +117,10 @@ export class Mailer<Transport extends MailTransportContract> implements MailerCo
    * Queues a compiled email
    */
   async sendLaterCompiled(
-    compiledMessage: { message: NodeMailerMessage; views: MessageBodyTemplates },
+    compiledMessage: {
+      message: NodeMailerMessage
+      views: MessageBodyTemplates
+    },
     sendConfig?: unknown
   ) {
     /**

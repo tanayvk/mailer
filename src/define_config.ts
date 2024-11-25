@@ -7,8 +7,24 @@
  * file that was distributed with this source code.
  */
 
-import { configProvider } from '@adonisjs/core'
-import type { ConfigProvider } from '@adonisjs/core/types'
+const configProvider = {
+  create<T>(resolver: ConfigProvider<T>['resolver']): ConfigProvider<T> {
+    return {
+      type: 'provider',
+      resolver,
+    }
+  },
+
+  async resolve<T>(app: any, provider: unknown): Promise<T | null> {
+    if (provider && typeof provider === 'object' && 'type' in provider) {
+      return (provider as ConfigProvider<T>).resolver(app)
+    }
+
+    return null
+  },
+}
+
+import type { ConfigProvider } from './types.js'
 
 import type { SESTransport } from './transports/ses.js'
 import type { SMTPTransport } from './transports/smtp.js'

@@ -10,13 +10,17 @@
 import type { TlsOptions } from 'node:tls'
 import type { SendMailOptions } from 'nodemailer'
 import type { SESClientConfig } from '@aws-sdk/client-ses'
-import type { ConfigProvider } from '@adonisjs/core/types'
 import type MimeNode from 'nodemailer/lib/mime-node/index.js'
 
 import type { Message } from './message.js'
 import type { BaseMail } from './base_mail.js'
 import type { MailManager } from './mail_manager.js'
 import type { MailResponse } from './mail_response.js'
+
+export type ConfigProvider<T> = {
+  type: 'provider'
+  resolver: (app: any) => Promise<T>
+}
 
 /**
  * Shape of the envelope node after the email has been
@@ -487,7 +491,9 @@ export interface MailersList {}
  * inside user app
  */
 export type InferMailers<
-  T extends ConfigProvider<{ mailers: Record<string, MailManagerTransportFactory> }>,
+  T extends ConfigProvider<{
+    mailers: Record<string, MailManagerTransportFactory>
+  }>,
 > = Awaited<ReturnType<T['resolver']>>['mailers']
 
 /**
