@@ -67,7 +67,7 @@ export class Emitter<EventsList extends Record<string | symbol | number, any>> {
   }
 }
 
-export const generateMailer = async (
+const generateMailer = async (
   config: MailerConfig & {
     default?: string | undefined
     mailers: {
@@ -75,3 +75,5 @@ export const generateMailer = async (
     }
   }
 ) => new MailManager(new Emitter(), await defineConfig(config).resolver(null))
+
+export { generateMailer }
