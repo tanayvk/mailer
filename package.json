@@ -1,7 +1,7 @@
 {
 	"name": "@tanayvk/mailer",
 	"description": "@adonisjs/mail without @adonisjs/core dependency.",
-	"version": "9.3.4",
+	"version": "9.4.4",
 	"engines": {
 		"node": ">=18.16.0"
 	},

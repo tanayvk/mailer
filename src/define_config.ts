@@ -24,24 +24,7 @@ const configProvider = {
   },
 }
 
-import type { ConfigProvider } from './types.js'
-
-import type { SESTransport } from './transports/ses.js'
-import type { SMTPTransport } from './transports/smtp.js'
-import type { BrevoTransport } from './transports/brevo.js'
-import type { ResendTransport } from './transports/resend.js'
-import type { MailgunTransport } from './transports/mailgun.js'
-import type { SparkPostTransport } from './transports/sparkpost.js'
-import type {
-  SESConfig,
-  SMTPConfig,
-  BrevoConfig,
-  MailerConfig,
-  ResendConfig,
-  MailgunConfig,
-  SparkPostConfig,
-  MailManagerTransportFactory,
-} from './types.js'
+import type { ConfigProvider, MailerConfig, MailManagerTransportFactory } from './types.js'
 
 /**
  * Helper to remap known mailers to factory functions
@@ -51,8 +34,8 @@ type ResolvedConfig<KnownMailers extends Record<string, MailManagerTransportFact
     default?: keyof KnownMailers
     mailers: {
       [K in keyof KnownMailers]: KnownMailers[K] extends ConfigProvider<infer A>
-        ? A
-        : KnownMailers[K]
+      ? A
+      : KnownMailers[K]
     }
   }
 
@@ -88,54 +71,4 @@ export function defineConfig<KnownMailers extends Record<string, MailManagerTran
       ...rest,
     } as ResolvedConfig<KnownMailers>
   })
-}
-
-/**
- * Config helpers to create a reference for inbuilt
- * mail transports
- */
-export const transports: {
-  smtp: (config: SMTPConfig) => ConfigProvider<() => SMTPTransport>
-  ses: (config: SESConfig) => ConfigProvider<() => SESTransport>
-  mailgun: (config: MailgunConfig) => ConfigProvider<() => MailgunTransport>
-  sparkpost: (config: SparkPostConfig) => ConfigProvider<() => SparkPostTransport>
-  resend: (config: ResendConfig) => ConfigProvider<() => ResendTransport>
-  brevo: (config: BrevoConfig) => ConfigProvider<() => BrevoTransport>
-} = {
-  smtp(config) {
-    return configProvider.create(async () => {
-      const { SMTPTransport } = await import('./transports/smtp.js')
-      return () => new SMTPTransport(config)
-    })
-  },
-  ses(config) {
-    return configProvider.create(async () => {
-      const { SESTransport } = await import('./transports/ses.js')
-      return () => new SESTransport(config)
-    })
-  },
-  mailgun(config) {
-    return configProvider.create(async () => {
-      const { MailgunTransport } = await import('./transports/mailgun.js')
-      return () => new MailgunTransport(config)
-    })
-  },
-  sparkpost(config) {
-    return configProvider.create(async () => {
-      const { SparkPostTransport } = await import('./transports/sparkpost.js')
-      return () => new SparkPostTransport(config)
-    })
-  },
-  resend(config) {
-    return configProvider.create(async () => {
-      const { ResendTransport } = await import('./transports/resend.js')
-      return () => new ResendTransport(config)
-    })
-  },
-  brevo(config) {
-    return configProvider.create(async () => {
-      const { BrevoTransport } = await import('./transports/brevo.js')
-      return () => new BrevoTransport(config)
-    })
-  },
 }
