@@ -1,7 +1,7 @@
 {
 	"name": "@tanayvk/mailer",
 	"description": "@adonisjs/mail without @adonisjs/core dependency.",
-	"version": "9.2.4",
+	"version": "9.3.4",
 	"engines": {
 		"node": ">=18.16.0"
 	},
@@ -22,7 +22,8 @@
 		"./transports/resend": "./build/src/transports/resend.js",
 		"./transports/mailgun": "./build/src/transports/mailgun.js",
 		"./transports/sparkpost": "./build/src/transports/sparkpost.js",
-		"./messengers/memory": "./build/src/messengers/memory_queue.js"
+		"./messengers/memory": "./build/src/messengers/memory_queue.js",
+		"./generate": "./build/src/generate.js"
 	},
 	"scripts": {
 		"pretest": "npm run lint",
@@ -155,7 +156,8 @@
 			"src/transports/smtp.ts",
 			"src/transports/mailgun.ts",
 			"src/transports/sparkpost.ts",
-			"src/messengers/memory_queue.ts"
+			"src/messengers/memory_queue.ts",
+			"src/generate.ts"
 		],
 		"outDir": "./build",
 		"clean": true,
