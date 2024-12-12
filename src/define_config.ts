@@ -24,7 +24,9 @@ const configProvider = {
   },
 }
 
-import type { ConfigProvider, MailerConfig, MailManagerTransportFactory } from './types.js'
+import type { ConfigProvider } from './types.js'
+
+import type { MailerConfig, MailManagerTransportFactory } from './types.js'
 
 /**
  * Helper to remap known mailers to factory functions
@@ -34,8 +36,8 @@ type ResolvedConfig<KnownMailers extends Record<string, MailManagerTransportFact
     default?: keyof KnownMailers
     mailers: {
       [K in keyof KnownMailers]: KnownMailers[K] extends ConfigProvider<infer A>
-      ? A
-      : KnownMailers[K]
+        ? A
+        : KnownMailers[K]
     }
   }
 
