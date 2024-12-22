@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import got from 'got'
+import { ofetch } from 'ofetch'
 import { text } from 'node:stream/consumers'
 import { ObjectBuilder } from '@poppinss/utils'
 import { type Transport, createTransport } from 'nodemailer'
@@ -148,16 +148,19 @@ class NodeMailerTransport implements Transport {
        * need to convert the stream to a string
        */
       const mimeMessage = await text(mail.message.createReadStream())
-      const response = await got.post<{
-        results: Omit<SparkPostSentMessageInfo, 'messageId' | 'envelope'>
-      }>(url, {
-        json: {
-          options,
-          recipients,
-          content: { email_rfc822: mimeMessage },
+      const payload = {
+        options,
+        recipients,
+        content: { email_rfc822: mimeMessage },
+      }
+      const response = await ofetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': this.#config.key,
+          'Content-Type': 'application/json',
         },
-        responseType: 'json',
-        headers: { Authorization: this.#config.key },
+        body: payload,
       })
 
       const sparkPostMessageId = response.body.results.id

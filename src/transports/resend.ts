@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import got from 'got'
+import { ofetch } from 'ofetch'
 import { createTransport, type Transport } from 'nodemailer'
 import MailMessage from 'nodemailer/lib/mailer/mail-message.js'
 
@@ -147,13 +147,14 @@ class NodeMailerTransport implements Transport {
     debug('resend mail payload %O', payload)
 
     try {
-      const response = await got.post<{ id: string }>(url, {
-        responseType: 'json',
-        json: payload,
+      const response = await ofetch(url, {
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.#config.key}`,
+          'accept': 'application/json',
+          'authorization': `Bearer ${this.#config.key}`,
+          'content-type': 'application/json',
         },
+        body: payload,
       })
 
       const resendMessageId = response.body.id

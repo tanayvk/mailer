@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import got from 'got'
+import { ofetch } from 'ofetch'
 import { FormData, File } from 'formdata-node'
 import { ObjectBuilder } from '@poppinss/utils'
 import { type Transport, createTransport } from 'nodemailer'
@@ -193,14 +193,17 @@ class NodeMailerTransport implements Transport<MailgunSentMessageInfo> {
     debug('mailgun mail envelope %s', envelope)
 
     try {
-      const response = await got.post<{ id: string }>(url, {
-        body: form as any,
-        username: 'api',
-        password: this.#config.key,
-        responseType: 'json',
+      const encodedCredentials = Buffer.from(`api:${this.#config.key}`).toString('base64')
+      const response = await ofetch(url, {
+        method: 'POST',
+        headers: {
+          accept: 'application/json',
+          authorization: `Basic ${encodedCredentials}`,
+        },
+        body: form,
       })
 
-      const mailgunMessageId = response.body.id
+      const mailgunMessageId = response.id
       const messageId = mailgunMessageId
         ? mailgunMessageId.replace(/^<|>$/g, '')
         : mail.message.messageId()
