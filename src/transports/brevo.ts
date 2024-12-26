@@ -132,9 +132,7 @@ class NodeMailerTransport implements Transport {
       const response = await ofetch<{ messageId: string }>(url, {
         method: 'POST',
         headers: {
-          'accept': 'application/json',
           'api-key': this.#config.key,
-          'content-type': 'application/json',
         },
         body: payload,
       })

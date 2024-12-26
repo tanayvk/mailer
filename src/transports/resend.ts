@@ -150,19 +150,17 @@ class NodeMailerTransport implements Transport {
       const response = await ofetch(url, {
         method: 'POST',
         headers: {
-          'accept': 'application/json',
-          'authorization': `Bearer ${this.#config.key}`,
-          'content-type': 'application/json',
+          authorization: `Bearer ${this.#config.key}`,
         },
         body: payload,
       })
 
-      const resendMessageId = response.body.id
+      const resendMessageId = response.id
       const messageId = resendMessageId
         ? resendMessageId.replace(/^<|>$/g, '')
         : mail.message.messageId()
 
-      callback(null, { messageId, envelope, ...response.body })
+      callback(null, { messageId, envelope, ...response })
     } catch (error) {
       callback(
         new E_MAIL_TRANSPORT_ERROR('Unable to send email using the resend transport', {

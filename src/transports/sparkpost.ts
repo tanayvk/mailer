@@ -156,19 +156,17 @@ class NodeMailerTransport implements Transport {
       const response = await ofetch(url, {
         method: 'POST',
         headers: {
-          'Accept': 'application/json',
-          'Authorization': this.#config.key,
-          'Content-Type': 'application/json',
+          authorization: this.#config.key,
         },
         body: payload,
       })
 
-      const sparkPostMessageId = response.body.results.id
+      const sparkPostMessageId = response.results.id
       const messageId = sparkPostMessageId
         ? sparkPostMessageId.replace(/^<|>$/g, '')
         : mail.message.messageId()
 
-      callback(null, { messageId, envelope, ...response.body.results })
+      callback(null, { messageId, envelope, ...response.results })
     } catch (error) {
       callback(
         new E_MAIL_TRANSPORT_ERROR('Unable to send email using the sparkpost transport', {

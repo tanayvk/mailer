@@ -197,7 +197,6 @@ class NodeMailerTransport implements Transport<MailgunSentMessageInfo> {
       const response = await ofetch(url, {
         method: 'POST',
         headers: {
-          accept: 'application/json',
           authorization: `Basic ${encodedCredentials}`,
         },
         body: form,
